@@ -1,0 +1,16 @@
+name: "AKM Simulation"
+navbar:
+  title: "AKM Simulation - Cemfi Summer School" 
+  left:
+    - text: "Homework"
+      icon: fa-books
+      href: index.html
+
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+    include:
+      after_body: footer.html
+      in_header: header.html
+    css: styles.css
