@@ -1,14 +1,14 @@
----
-title: "Simulation on AKM fixed effects"
-date: "26 September, 2023"
-output:
-  html_document: 
-    toc: yes
-    toc_float:
-      collapsed: no
-      smooth_scroll: no
-    keep_md: yes
----
+#---
+#title: "Simulation on AKM fixed effects"
+#date: "26 September, 2023"
+#output:
+#  html_document: 
+#    toc: yes
+#    toc_float:
+#      collapsed: no
+#      smooth_scroll: no
+#    keep_md: yes
+#---
 
 The goal of the following simulation is to develop our understanding of the two-way fixed effect model. See the original paper by [Abowd Kramartz and Margolis](http://onlinelibrary.wiley.com/doi/10.1111/1468-0262.00020/full).
 
