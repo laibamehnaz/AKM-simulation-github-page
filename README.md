@@ -1,7 +1,7 @@
 
 # Get started
 
-To get started with the homework, please creta a ```fork``` of this repository. Once you have the forked repository, follow the steps below:
+To get started with the homework, please create a ```fork``` of this repository. Once you have the forked repository, follow the steps below:
 
 1. In RStudio, go to “File > New Project”
 2. Click on “Version Control: Checkout a project from a version control repository”
