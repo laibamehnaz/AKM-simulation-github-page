@@ -6,7 +6,7 @@ The goal of the following simulation is to develop our understanding of the two-
 
 # Constructing Employer-Employee matched data
 
-## Simulating a network
+# Simulating a network
 
 One central piece is to have a network of workers and firms over time. We then start by simulating such an object. The rest of the simulation will focus on adding wages to this model. As we know, a central issue of the network will be the number of movers.
 
