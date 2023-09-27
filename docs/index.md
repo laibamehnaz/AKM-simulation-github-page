@@ -1,17 +1,5 @@
-#---
-#title: "Simulation on AKM fixed effects"
-#date: "27 September, 2023"
-#output:
-#  html_document: 
-#    toc: yes
-#    toc_float:
-#      collapsed: no
-#      smooth_scroll: no
-#    keep_md: yes
-#---
 
 The goal of the following simulation is to develop our understanding of the two-way fixed effect model. See the original paper by [Abowd Kramartz and Margolis](http://onlinelibrary.wiley.com/doi/10.1111/1468-0262.00020/full).
-
 
 
 # Constructing Employer-Employee matched data
@@ -20,7 +8,7 @@ The goal of the following simulation is to develop our understanding of the two-
 
 One central piece is to have a network of workers and firms over time. We then start by simulating such an object. The rest of the simulation will focus on adding wages to this model. As we know, a central issue of the network will be the number of movers.
 
-We are going to model the mobility between workers and firms. Given a transition matrix we can solve for a stationary distrubtion, and then construct our panel from there.
+We are going to model the mobility between workers and firms. Given a transition matrix we can solve for a stationary distribution, and then construct our panel from there.
 
 
 ```r
