@@ -1,4 +1,4 @@
-This repository hosts the homework for AKM simulation. Follow the detailed instructions found here .
+This repository hosts the homework for AKM simulation. Follow the detailed instructions found [here](docs/index.md) .
 
 # Get started
 
