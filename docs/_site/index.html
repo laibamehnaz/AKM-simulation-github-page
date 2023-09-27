@@ -13,7 +13,7 @@
 
 <title>Simulation on AKM fixed effects</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -29,14 +29,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
 <!--[if lt IE 9]>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.ie.min.css" />
@@ -69,6 +69,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -93,6 +94,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -150,11 +154,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -183,8 +191,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -192,16 +200,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -324,7 +325,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -353,7 +354,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Simulation on AKM fixed effects</h1>
-<h4 class="date">25 September, 2023</h4>
+<h4 class="date">27 September, 2023</h4>
 
 </div>
 
@@ -420,10 +421,12 @@ for (l in 1:nl) {
 Plot1=wireframe(G[1,,],aspect = c(1,1),xlab = &quot;previous firm&quot;,ylab=&quot;next firm&quot;)
 Plot2=wireframe(G[nl,,],aspect = c(1,1),xlab = &quot;previous firm&quot;,ylab=&quot;next firm&quot;)
 grid.arrange(Plot1, Plot2,nrow=1)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img
+src="index_files/figure-html/unnamed-chunk-2-1.png" /><!-- --></p>
 <p>And we can plot the joint distribution of matches</p>
 <pre class="r"><code>wireframe(H,aspect = c(1,1),xlab = &quot;worker&quot;,ylab=&quot;firm&quot;)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img
+src="index_files/figure-html/unnamed-chunk-3-1.png" /><!-- --></p>
 <p>The next step is to simulate our network given our transitions
 rules.</p>
 <pre class="r"><code>nt = 5
@@ -495,9 +498,11 @@ data &lt;- data[, movers_size:= firm_mover[fid,V1]]
 
 # PLOTS
 hist(data[t==1]$firm_size) # at any t, the firm size distribution is the same</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img
+src="index_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
 <pre class="r"><code>hist(data$movers_size)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p><img
+src="index_files/figure-html/unnamed-chunk-6-2.png" /><!-- --></p>
 </div>
 <div id="simulating-akm-wages" class="section level2">
 <h2>Simulating AKM wages</h2>
@@ -561,6 +566,196 @@ data_ckh &lt;- data_ckh[,mean(lw),list(t,flag_ini,flag_end)]</code></pre>
 <h1>Estimating AKM</h1>
 <p>This requires to first extract a large connected set, and then to
 estimate the linear problem with many dummies.</p>
+<div id="extracting-the-connected-set" class="section level2">
+<h2>Extracting the connected set</h2>
+<p>Because we are not going to deal with extremely large data-sets, we
+can use of the shelf algorithms to extract the connected set. Use the
+function <code>conComp</code> from the package <code>ggm</code> to
+extract the connected set from our data. To do so you will need to
+construct first an adgency matrix between the firms. Here is how I would
+proceed to construct the adjency matrix:</p>
+<pre class="r"><code>setkey(data,i,t)
+
+adjMat &lt;- function(data){ 
+  setkey(data,i,t)
+  data[ ,fid.l1 := data[J(i,t-1),fid]]
+  data &lt;- data[complete.cases(data)]
+  nfirms = data[,max(fid)]
+  jdata = data[fid.l1!=fid][,list(fid,fid.l1)]
+  jdata = unique(jdata)
+  setkey(jdata,fid,fid.l1)
+  # jdata holds the indices where a sparse matrix should be 1.
+  amat = Matrix::sparseMatrix(i=jdata[,c(fid,fid.l1)],j=jdata[,c(fid.l1,fid)],dims=c(nfirms,nfirms))
+ amat
+}
+
+concomp &lt;- function(data){
+  setkey(data,i,t)
+  data[ ,fid.l1 := data[J(i,t-1),fid]]
+  data &lt;- data[complete.cases(data)]
+  cf = lfe::compfactor(list(f1=data[,factor(fid)],f2=data[,factor(fid.l1)]))
+  fr = data.frame(f1=data[,factor(fid)],f2=data[,factor(fid.l1)],cf)
+  data = data[fr$cf==1]
+  return(data)
+}
+
+
+data &lt;- concomp(data)
+# compute the number of firms:
+aa = unique(data$fid)
+Nfirm_con = length(aa)
+
+print(&quot;proportion of firms in the connected set is&quot;)</code></pre>
+<pre><code>## [1] &quot;proportion of firms in the connected set is&quot;</code></pre>
+<pre class="r"><code>print(Nfirm_con/Nfirm)</code></pre>
+<pre><code>## [1] 0.9586421</code></pre>
+</div>
+<div id="estimating-worker-and-firms-fe" class="section level2">
+<h2>Estimating worker and firms FE</h2>
+<p>Finally, we are going to implement the AKM estimator. This can be
+done simply by updating in turn the worker FE and the firms FE.</p>
+<p>Start by appending 2 new columns <code>alpha_hat</code> and
+<code>psi_hat</code> to your data. Then loop over the following:</p>
+<ol style="list-style-type: decimal">
+<li>update <code>alpha_hat</code> by just taking the mean within
+<code>i</code> net of firm FE, use data.table to do that very
+efficiently</li>
+<li>update <code>psi_hat</code> by just taking the mean within
+<code>fid</code> net of worker FE, use data.table to do that very
+efficiently</li>
+</ol>
+<p>Estimating this model is non-trivial. We are going to take the
+approach of <a
+href="https://s3.amazonaws.com/academia.edu.documents/42461471/Variable_selection_in_linear_regression20160209-26324-14r87y1.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&amp;Expires=1525336798&amp;Signature=I2SdtwWgl0U6e28114dmaiLjlA4%3D&amp;response-content-disposition=inline%3B%20filename%3DVariable_selection_in_linear_regression.pdf#page=130">Guimareas
+and Portugal</a>, who propose a <em>ZigZag</em> estimator in the Stata
+Journal. <a
+href="https://www.sciencedirect.com/science/article/pii/S0167947313001266">Simen
+Gaure</a> proposes an almost equivalent approach and develops the <a
+href="https://cran.r-project.org/web/packages/lfe/lfe.pdf"><code>lfe</code></a>
+package for R. The idea in both approaches starts with the
+formulation</p>
+<p><span class="math display">\[
+\mathbf{Y} = \mathbf{Z}\beta + \mathbf{D}\alpha + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{Z}\)</span> is <span
+class="math inline">\((N,k)\)</span>, and <span
+class="math inline">\(\mathbf{D}\)</span> is a <span
+class="math inline">\((N,G_1)\)</span> matrix of dummy variables:
+element <span class="math inline">\((i,j)\)</span> of <span
+class="math inline">\(\mathbf{D}\)</span> is <span
+class="math inline">\(1\)</span> if <span
+class="math inline">\(i\)</span> is associated to <span
+class="math inline">\(j\)</span>.</p>
+<p>Both papers show the recursive relationship</p>
+<p><span class="math display">\[
+\left[ \begin{array}{c}
+\beta &amp;=&amp; (\mathbf{Z}&#39;\mathbf{Z})^{-1}
+\mathbf{Z}&#39;(\mathbf{Y}-\mathbf{D}\alpha) \\
+\alpha &amp;=&amp; (\mathbf{D}&#39;\mathbf{D})^{-1}
+\mathbf{D}&#39;(\mathbf{Y}-\mathbf{Z}\beta)
+\end{array}
+\right]
+\]</span></p>
+<ul>
+<li>line 2 is just <code>data[,mean(resid(lm(y ~ z))),by=i]</code></li>
+<li>Dimensionality of <span class="math inline">\(\mathbf{D}\)</span>
+becomes irrelevant.</li>
+<li>Same principle for more than 1 FE:</li>
+</ul>
+<p><span class="math display">\[
+\mathbf{Y} = \mathbf{Z}\beta + \mathbf{D}_1\alpha + \mathbf{D}_2\gamma +
+\epsilon
+\]</span></p>
+<p>and recursive structure:</p>
+<p><span class="math display">\[
+\left[ \begin{array}{c}
+\beta &amp;=&amp; (\mathbf{Z}&#39;\mathbf{Z})^{-1}
+\mathbf{Z}&#39;(\mathbf{Y}-\mathbf{D}_1\alpha-\mathbf{D}_2\gamma) \\
+\alpha &amp;=&amp; (\mathbf{D}_1&#39;\mathbf{D}_1)^{-1}
+\mathbf{D}_1&#39;(\mathbf{Y}-\mathbf{Z}\beta-\mathbf{D}_2\gamma) \\
+\gamma &amp;=&amp; (\mathbf{D}_2&#39;\mathbf{D}_2)^{-1}
+\mathbf{D}_2&#39;(\mathbf{Y}-\mathbf{Z}\beta-\mathbf{D}_1\alpha)
+\end{array}
+\right]
+\]</span></p>
+<ul>
+<li>First, store a <code>mod = data[,lm(y ~ z + D1 + D2)]</code></li>
+<li>line 2 is just
+<code>data[,mean(resid(mod) + coef(mod)[3]*D2),by=i]</code></li>
+<li>line 3 is just
+<code>data[,mean(resid(mod) + coef(mod)[2]*D1),by=j]</code></li>
+</ul>
+<p>Guimaraes+Portugal do this in an iterative fashion until the
+difference in mean squared error (MSE) of successive estimates of line 0
+becomes small.</p>
+<pre class="r"><code>guimaraesPortugal &lt;- function(data,tol=1e-6){
+  setkey(data,i,t)
+  data[,fid.l1 := data[J(i,t-1)][[&quot;fid&quot;]]]
+  data[,move:=fid!=fid.l1]
+  mvid &lt;- data[(move),list(id=unique(i))]
+  data[,alpha_hat := 0.0]
+  data[,psi_hat := 0.0]
+  delta = Inf
+  MSE1 = Inf
+  i = 0
+  while (delta&gt;tol){
+    i = i + 1
+    mod = data[,lm(lw ~ psi_hat + alpha_hat)]
+    coefs = coef(mod)
+    if (i==1){
+      coefs[2:3] &lt;- 0
+    }
+    data[,res := resid(mod)]
+    MSE0 = data[.(mvid$id),mean(res^2)] #You can increase speed by focusing on movers only first to recover the `psi`.
+    delta = abs(MSE0 - MSE1)
+    MSE1 = MSE0
+    data[,alpha_hat := mean(res + coefs[3]*alpha_hat),by=i ]
+    data[,psi_hat := mean(res + coefs[2]*psi_hat),by=fid ]
+    if (i==1 || (i %% 10 == 0)){
+     # flog.info(&quot;iter=%d, MSE=%f, delta(MSE)=%f&quot;,i,MSE0,delta)  
+    }
+  }
+  return(data)
+}
+dd=guimaraesPortugal(data)
+
+# estimated coefs on a simple lm must be one
+summary(lm(lw~alpha_hat+psi_hat,data))</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lw ~ alpha_hat + psi_hat, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.1025 -0.4552 -0.0002  0.4554  3.3430 
+## 
+## Coefficients:
+##              Estimate Std. Error  t value Pr(&gt;|t|)    
+## (Intercept) 0.0017894  0.0010949    1.634    0.102    
+## alpha_hat   1.0000480  0.0009859 1014.370   &lt;2e-16 ***
+## psi_hat     1.0001131  0.0012254  816.160   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6816 on 387551 degrees of freedom
+## Multiple R-squared:  0.788,  Adjusted R-squared:  0.788 
+## F-statistic: 7.202e+05 on 2 and 387551 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="computing-the-variance-decomposition" class="section level2">
+<h2>Computing the variance decomposition</h2>
+<p>We now compute the variance decomposition and compare it with its
+infeasible counterpart, using alpha and psi, instead of <span
+class="math inline">\(\hat{\alpha}\)</span> and <span
+class="math inline">\(\hat{\psi}\)</span>.</p>
+<p>The variance decomposition is: <span
+class="math inline">\((var(\hat{\alpha}),var(\hat{\psi}),cov(\hat{\alpha},\hat{\psi}))\)</span>:</p>
+<pre class="r"><code>c(var(data$alpha_hat),var(data$psi_hat),cov(data$alpha_hat,data$psi_hat))</code></pre>
+<pre><code>## [1]  1.2761961  0.8260722 -0.1878522</code></pre>
+<p>The true variance decomposition is: <span
+class="math inline">\((var(\alpha),var(\psi),cov(\alpha,\psi))\)</span></p>
+<pre class="r"><code>c(var(data$alpha),var(data$psi),cov(data$alpha,data$psi))</code></pre>
+<pre><code>## [1] 0.6167018 0.3444056 0.2933551</code></pre>
+</div>
 </div>
 
 <!--<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a> -->
