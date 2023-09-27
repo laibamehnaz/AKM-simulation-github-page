@@ -298,7 +298,7 @@ Start by appending 2 new columns `alpha_hat` and `psi_hat` to your data. Then lo
 Estimating this model is non-trivial. We are going to take the approach of [Guimareas and Portugal](https://s3.amazonaws.com/academia.edu.documents/42461471/Variable_selection_in_linear_regression20160209-26324-14r87y1.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&Expires=1525336798&Signature=I2SdtwWgl0U6e28114dmaiLjlA4%3D&response-content-disposition=inline%3B%20filename%3DVariable_selection_in_linear_regression.pdf#page=130), who propose a *ZigZag* estimator in the Stata Journal. [Simen Gaure](https://www.sciencedirect.com/science/article/pii/S0167947313001266) proposes an almost equivalent approach and develops the [`lfe`](https://cran.r-project.org/web/packages/lfe/lfe.pdf) package for R. The idea in both approaches starts with the formulation
 
 
-$Y = Z\beta + D\alpha + \epsilon$
+- $Y = Z \beta + D \alpha + \epsilon$
 
 $$ \mathbf{Y} = \mathbf{Z}\beta + \mathbf{D}\alpha + \epsilon $$
 
